@@ -16,7 +16,7 @@ lessThan(QT_MAJOR_VERSION, 5): QT += webkit
 
 include(deps/QsLog/QsLog.pri)
 
-INCLUDEPATH += src deps
+INCLUDEPATH += include deps
 
 SOURCES += \
     deps/sqlite/sqlite3.c \
@@ -63,44 +63,44 @@ SOURCES += \
 
 HEADERS += \
     deps/sqlite/sqlite3.h \
-    src/application.h \
-    src/autoonline.h \
-    src/bucket.h \
-    src/buyoutmanager.h \
-    src/column.h \
-    src/currencymanager.h \
-    src/datastore.h \
-    src/sqlitedatastore.h \
-    src/filesystem.h \
-    src/filters.h \
-    src/flowlayout.h \
-    src/imagecache.h \
-    src/item.h \
-    src/itemconstants.h \
-    src/itemlocation.h \
-    src/items_model.h \
-    src/itemsmanager.h \
-    src/itemsmanagerworker.h \
-    src/itemtooltip.h \
-    src/logindialog.h \
-    src/logpanel.h \
-    src/mainwindow.h \
-    src/memorydatastore.h \
-    src/modlist.h \
-    src/modsfilter.h \
-    src/porting.h \
-    src/rapidjson_util.h \
-    src/replytimeout.h \
-    src/search.h \
-    src/selfdestructingreply.h \
-    src/shop.h \
-    src/steamlogindialog.h \
-    src/updatechecker.h \
-    src/util.h \
-    src/version.h \
-    src/version_defines.h \
-    src/verticalscrollarea.h \
-    src/lambda_connect.h \
+    include/application.h \
+    include/autoonline.h \
+    include/bucket.h \
+    include/buyoutmanager.h \
+    include/column.h \
+    include/currencymanager.h \
+    include/datastore.h \
+    include/sqlitedatastore.h \
+    include/filesystem.h \
+    include/filters.h \
+    include/flowlayout.h \
+    include/imagecache.h \
+    include/item.h \
+    include/itemconstants.h \
+    include/itemlocation.h \
+    include/items_model.h \
+    include/itemsmanager.h \
+    include/itemsmanagerworker.h \
+    include/itemtooltip.h \
+    include/logindialog.h \
+    include/logpanel.h \
+    include/mainwindow.h \
+    include/memorydatastore.h \
+    include/modlist.h \
+    include/modsfilter.h \
+    include/porting.h \
+    include/rapidjson_util.h \
+    include/replytimeout.h \
+    include/search.h \
+    include/selfdestructingreply.h \
+    include/shop.h \
+    include/steamlogindialog.h \
+    include/updatechecker.h \
+    include/util.h \
+    include/version.h \
+    include/version_defines.h \
+    include/verticalscrollarea.h \
+    include/lambda_connect.h \
     test/testdata.h \
     test/testitem.h \
     test/testitemsmanager.h \
