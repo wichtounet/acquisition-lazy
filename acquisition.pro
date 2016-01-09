@@ -124,3 +124,15 @@ DEPENDPATH *= $${INCLUDEPATH}
 RESOURCES += resources.qrc
 
 RC_FILE = resources.rc
+
+CONFIG(debug, debug|release) {
+    DESTDIR = build/release
+}
+CONFIG(release, debug|release) {
+    DESTDIR = build/debug
+}
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.u
