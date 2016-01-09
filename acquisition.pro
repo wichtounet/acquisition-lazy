@@ -1,6 +1,8 @@
 TARGET = acquisition
 TEMPLATE = app
 
+CONFIG += debug_and_release
+
 QT += core gui network webkitwidgets testlib
 
 win32 {
@@ -128,6 +130,7 @@ RC_FILE = resources.rc
 CONFIG(debug, debug|release) {
     DESTDIR = build/release
 }
+
 CONFIG(release, debug|release) {
     DESTDIR = build/debug
 }
