@@ -249,6 +249,7 @@ void ItemsManagerWorker::OnFirstTabReceived() {
     tabs_as_string_ = Util::RapidjsonSerialize(doc["tabs"]);
 
     QLOG_DEBUG() << "Received tabs list, there are" << doc["tabs"].Size() << "tabs";
+
     tabs_.clear();
     for (auto &tab : doc["tabs"]) {
         std::string label = tab["n"].GetString();

@@ -47,6 +47,7 @@ public:
     void Update();
     void SetAutoUpdateInterval(int minutes);
     void SetAutoUpdate(bool update);
+    void SetAutoPrice(bool price);
     int auto_update_interval() const { return auto_update_interval_; }
     bool auto_update() const { return auto_update_; }
     const Items &items() const { return items_; }
@@ -67,8 +68,13 @@ private:
 
     // should items be automatically refreshed
     bool auto_update_;
+
     // items will be automatically updated every X minutes
     int auto_update_interval_;
+
+    // should tabs be automatically priced
+    bool auto_price_;
+
     std::unique_ptr<QTimer> auto_update_timer_;
     std::unique_ptr<ItemsManagerWorker> worker_;
     std::unique_ptr<QThread> thread_;

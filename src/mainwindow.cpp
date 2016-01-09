@@ -636,6 +636,10 @@ void MainWindow::on_actionAutomatically_refresh_items_triggered() {
     app_->items_manager().SetAutoUpdate(ui->actionAutomatically_refresh_items->isChecked());
 }
 
+void MainWindow::on_actionTabsAutoPrice_triggered() {
+    app_->items_manager().SetAutoPrice(ui->actionTabsAutoPrice->isChecked());
+}
+
 void MainWindow::on_actionUpdate_shop_triggered() {
     app_->shop().SubmitShopToForum(true);
 }

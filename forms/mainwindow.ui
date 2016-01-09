@@ -272,6 +272,12 @@
     <addaction name="actionAutomatically_refresh_items"/>
     <addaction name="actionItems_refresh_interval"/>
    </widget>
+   <widget class="QMenu" name="menuTabs">
+    <property name="title">
+     <string>Tabs</string>
+    </property>
+    <addaction name="actionTabsAutoPrice"/>
+   </widget>
    <widget class="QMenu" name="menuAuto_online">
     <property name="title">
      <string>Auto online</string>
@@ -289,6 +295,7 @@
    <addaction name="menuItems"/>
    <addaction name="menuShop"/>
    <addaction name="menuAuto_online"/>
+   <addaction name="menuTabs"/>
    <addaction name="menuCurrency"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -311,6 +318,17 @@
    </property>
    <property name="text">
     <string>Automatically refresh items</string>
+   </property>
+  </action>
+  <action name="actionTabsAutoPrice">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Automatically set buyout</string>
    </property>
   </action>
   <action name="actionItems_refresh_interval">

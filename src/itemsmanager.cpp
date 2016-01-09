@@ -41,6 +41,7 @@ ItemsManager::ItemsManager(Application &app) :
 {
     auto_update_interval_ = std::stoi(data_.Get("autoupdate_interval", "30"));
     auto_update_ = data_.GetBool("autoupdate", true);
+    auto_price_ = data_.GetBool("autoprice", false);
     SetAutoUpdateInterval(auto_update_interval_);
     connect(auto_update_timer_.get(), SIGNAL(timeout()), this, SLOT(OnAutoRefreshTimer()));
 }
@@ -122,6 +123,11 @@ void ItemsManager::SetAutoUpdate(bool update) {
     else
         // to start timer
         SetAutoUpdateInterval(auto_update_interval_);
+}
+
+void ItemsManager::SetAutoPrice(bool price) {
+    data_.SetBool("autoprice", price);
+    auto_price_ = price;
 }
 
 void ItemsManager::SetAutoUpdateInterval(int minutes) {
