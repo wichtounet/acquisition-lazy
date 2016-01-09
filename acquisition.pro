@@ -127,15 +127,18 @@ RESOURCES += resources.qrc
 
 RC_FILE = resources.rc
 
-CONFIG(debug, debug|release) {
-    DESTDIR = build/release
+CONFIG(debug, debug|release){
+    DESTDIR = ./build/debug
+    OBJECTS_DIR = build/debug/.obj
+    MOC_DIR = build/debug/.moc
+    RCC_DIR = build/debug/.rcc
+    UI_DIR = build/debug/.ui
 }
 
-CONFIG(release, debug|release) {
-    DESTDIR = build/debug
+CONFIG(release, debug|release){
+    DESTDIR = ./build/release
+    OBJECTS_DIR = build/release/.obj
+    MOC_DIR = build/release/.moc
+    RCC_DIR = build/release/.rcc
+    UI_DIR = build/release/.ui
 }
-
-OBJECTS_DIR = $$DESTDIR/.obj
-MOC_DIR = $$DESTDIR/.moc
-RCC_DIR = $$DESTDIR/.qrc
-UI_DIR = $$DESTDIR/.u
