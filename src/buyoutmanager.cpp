@@ -184,3 +184,14 @@ bool Buyout::operator==(const Buyout&o) const {
 bool Buyout::operator!=(const Buyout &o) const {
     return !(o == *this);
 }
+
+std::ostream& operator<<(std::ostream& os, const Buyout& buyout){
+    return os
+        << "Buyout("
+        << buyout.value << ","
+        << BuyoutTypeAsPrefix[buyout.type] << ","
+        << CurrencyAsString[buyout.currency] << ","
+        << buyout.last_update.toString().toStdString() << ","
+        << buyout.inherited
+        << ")";
+}

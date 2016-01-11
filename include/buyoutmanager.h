@@ -19,8 +19,10 @@
 
 #pragma once
 
-#include "item.h"
+#include <iostream>
 #include <QDateTime>
+
+#include "item.h"
 
 enum Currency {
     CURRENCY_NONE,
@@ -124,6 +126,8 @@ struct Buyout {
     {}
 };
 
+std::ostream& operator<<(std::ostream& os, const Buyout& buyout);
+
 class DataStore;
 
 class BuyoutManager {
@@ -154,4 +158,3 @@ private:
     std::map<std::string, Buyout> tab_buyouts_;
     bool save_needed_;
 };
-
