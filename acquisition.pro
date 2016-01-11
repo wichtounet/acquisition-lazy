@@ -56,6 +56,7 @@ SOURCES += \
     src/version.cpp \
     src/verticalscrollarea.cpp \
     src/lambda_connect.cpp \
+    src/auto_price.cpp \
     test/testdata.cpp \
     test/testitem.cpp \
     test/testitemsmanager.cpp \

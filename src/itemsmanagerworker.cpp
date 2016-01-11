@@ -37,6 +37,8 @@
 #include "util.h"
 #include "currencymanager.h"
 #include "mainwindow.h"
+#include "auto_price.hpp"
+
 const char *kStashItemsUrl = "https://www.pathofexile.com/character-window/get-stash-items";
 const char *kCharacterItemsUrl = "https://www.pathofexile.com/character-window/get-items";
 const char *kGetCharactersUrl = "https://www.pathofexile.com/character-window/get-characters";
@@ -254,6 +256,7 @@ void ItemsManagerWorker::OnFirstTabReceived() {
     for (auto &tab : doc["tabs"]) {
         std::string label = tab["n"].GetString();
         tabs_.push_back(label);
+
         if (index > 0) {
             ItemLocation location;
             location.set_type(ItemLocationType::STASH);
