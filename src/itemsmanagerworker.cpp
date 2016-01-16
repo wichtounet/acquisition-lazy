@@ -35,6 +35,7 @@
 #include "application.h"
 #include "datastore.h"
 #include "util.h"
+#include "itemsmanager.h"
 #include "currencymanager.h"
 #include "mainwindow.h"
 #include "auto_price.hpp"
@@ -259,22 +260,29 @@ void ItemsManagerWorker::OnFirstTabReceived() {
         tabs_.push_back(label);
 
         if (index > 0) {
-            ItemLocation location;
-            location.set_type(ItemLocationType::STASH);
-            location.set_tab_id(index);
-            location.set_tab_label(label);
-            if (!tab.HasMember("hidden") || !tab["hidden"].GetBool())
-                QueueRequest(MakeTabRequest(index), location);
+            if(!application.items_manager().limit_downloads() || is_auto_priced(label)){
+                if (!tab.HasMember("hidden") || !tab["hidden"].GetBool()){
+                    ItemLocation location;
+                    location.set_type(ItemLocationType::STASH);
+                    location.set_tab_id(index);
+                    location.set_tab_label(label);
+
+                    QueueRequest(MakeTabRequest(index), location);
+                }
+            }
         }
+
         ++index;
     }
 
-    ItemLocation first_tab_location;
-    first_tab_location.set_type(ItemLocationType::STASH);
-    first_tab_location.set_tab_id(0);
-    first_tab_location.set_tab_label(tabs_[0]);
-    if (!doc["tabs"][0].HasMember("hidden") || !doc["tabs"][0]["hidden"].GetBool())
-        ParseItems(&doc["items"], first_tab_location, doc.GetAllocator());
+    if(!application.items_manager().limit_downloads() || is_auto_priced(tabs_[0])){
+        ItemLocation first_tab_location;
+        first_tab_location.set_type(ItemLocationType::STASH);
+        first_tab_location.set_tab_id(0);
+        first_tab_location.set_tab_label(tabs_[0]);
+        if (!doc["tabs"][0].HasMember("hidden") || !doc["tabs"][0]["hidden"].GetBool())
+            ParseItems(&doc["items"], first_tab_location, doc.GetAllocator());
+    }
 
     total_needed_ = queue_.size() + 1;
     total_completed_ = 1;
