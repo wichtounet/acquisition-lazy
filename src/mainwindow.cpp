@@ -124,6 +124,8 @@ void MainWindow::InitializeUi() {
     connect(ui->buyoutValueLineEdit, SIGNAL(textEdited(QString)), this, SLOT(OnBuyoutChange()));
 
     ui->actionAutomatically_refresh_items->setChecked(app_->items_manager().auto_update());
+    ui->actionTabsAutoPrice->setChecked(app_->items_manager().auto_price());
+    ui->actionTabsLimitDownloads->setChecked(app_->items_manager().limit_downloads());
     UpdateShopMenu();
 
     search_form_layout_ = new QVBoxLayout;
