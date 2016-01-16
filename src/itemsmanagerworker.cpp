@@ -45,6 +45,7 @@ const char *kGetCharactersUrl = "https://www.pathofexile.com/character-window/ge
 const char *kMainPage = "https://www.pathofexile.com/";
 
 ItemsManagerWorker::ItemsManagerWorker(Application &app, QThread *thread) :
+    application(app),
     data_(app.data()),
     signal_mapper_(nullptr),
     league_(app.league()),

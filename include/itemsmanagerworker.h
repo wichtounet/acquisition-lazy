@@ -76,6 +76,7 @@ private:
     void QueueRequest(const QNetworkRequest &request, const ItemLocation &location);
     void ParseItems(rapidjson::Value *value_ptr, const ItemLocation &base_location, rapidjson_allocator &alloc);
 
+    Application& application;
     DataStore &data_;
     QNetworkAccessManager network_manager_;
     QSignalMapper *signal_mapper_;
@@ -85,7 +86,7 @@ private:
     Items items_;
     int total_completed_, total_needed_;
     int requests_completed_, requests_needed_;
-    
+
     std::string items_as_string_;
     std::string tabs_as_string_;
     std::string league_;
