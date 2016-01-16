@@ -130,6 +130,11 @@ void ItemsManager::SetAutoPrice(bool price) {
     auto_price_ = price;
 }
 
+void ItemsManager::SetLimitDownloads(bool limit) {
+    data_.SetBool("limitdownloads", limit);
+    limit_downloads_ = limit;
+}
+
 void ItemsManager::SetAutoUpdateInterval(int minutes) {
     data_.Set("autoupdate_interval", std::to_string(minutes));
     auto_update_interval_ = minutes;

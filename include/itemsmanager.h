@@ -48,11 +48,15 @@ public:
     void SetAutoUpdateInterval(int minutes);
     void SetAutoUpdate(bool update);
     void SetAutoPrice(bool price);
+    void SetLimitDownloads(bool limit);
     int auto_update_interval() const { return auto_update_interval_; }
     bool auto_update() const { return auto_update_; }
     const Items &items() const { return items_; }
     const std::vector<std::string> &tabs() const { return tabs_; }
     void PropagateTabBuyouts();
+
+    bool auto_price() const { return auto_price_; }
+    bool limit_downloads() const { return limit_downloads_; }
 public slots:
     // called by auto_update_timer_
     void OnAutoRefreshTimer();
@@ -74,6 +78,9 @@ private:
 
     // should tabs be automatically priced
     bool auto_price_;
+
+    // should only priced tabs be automatically downloaded
+    bool limit_downloads_;
 
     std::unique_ptr<QTimer> auto_update_timer_;
     std::unique_ptr<ItemsManagerWorker> worker_;

@@ -640,6 +640,10 @@ void MainWindow::on_actionTabsAutoPrice_triggered() {
     app_->items_manager().SetAutoPrice(ui->actionTabsAutoPrice->isChecked());
 }
 
+void MainWindow::on_actionTabsLimitDownloads_triggered() {
+    app_->items_manager().SetLimitDownloads(ui->actionTabsLimitDownloads->isChecked());
+}
+
 void MainWindow::on_actionUpdate_shop_triggered() {
     app_->shop().SubmitShopToForum(true);
 }
