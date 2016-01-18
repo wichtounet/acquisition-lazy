@@ -31,6 +31,14 @@ bool ends_with(const std::string& str, const std::string& end) {
     }
 }
 
+bool starts_with(const std::string& str, const std::string& start){
+    if (str.length() >= start.length()) {
+        return str.compare (0, start.length(), start) == 0;
+    } else {
+        return false;
+    }
+}
+
 bool is_double(const std::string& s){
     std::istringstream iss(s);
     double d;
@@ -45,9 +53,23 @@ double to_double(const std::string& s){
     return d;
 }
 
+bool is_int(const std::string& s){
+    std::istringstream iss(s);
+    int d;
+    char c;
+    return iss >> d && !(iss >> c);
+}
+
+int to_int(const std::string& s){
+    std::istringstream iss(s);
+    int d;
+    iss >> d;
+    return d;
+}
+
 } //end of anonymous namespace
 
-bool is_auto_priced(const std::string& title){
+bool is_auto_priced(const std::string& title, bool recipe){
     if(ends_with(title, "c")){
         return is_double({title.begin(), title.begin() + title.size() - 1});
     } else if(ends_with(title, "f")){
@@ -60,10 +82,19 @@ bool is_auto_priced(const std::string& title){
         return is_double({title.begin(), title.begin() + title.size() - 2});
     }
 
+    // Automatically price chaos/regal recipes
+    if(recipe){
+        if(starts_with(title, "C")){
+            return is_int({title.begin() + 1, title.end()});
+        } else if(starts_with(title, "R")){
+            return is_int({title.begin() + 1, title.end()});
+        }
+    }
+
     return false;
 }
 
-Buyout get_auto_price(const std::string& title){
+Buyout get_auto_price(const std::string& title, bool recipe){
     if(ends_with(title, "c")){
         return {to_double({title.begin(), title.begin() + title.size() - 1}), BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
     } else if(ends_with(title, "f")){
@@ -74,6 +105,15 @@ Buyout get_auto_price(const std::string& title){
         return {to_double({title.begin(), title.begin() + title.size() - 3}), BUYOUT_TYPE_BUYOUT, CURRENCY_ORB_OF_ALCHEMY, {}};
     } else if(ends_with(title, "ex")){
         return {to_double({title.begin(), title.begin() + title.size() - 2}), BUYOUT_TYPE_BUYOUT, CURRENCY_EXALTED_ORB, {}};
+    }
+
+    // Automatically price chaos/regal recipes
+    if(recipe){
+        if(starts_with(title, "C")){
+            return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
+        } else if(starts_with(title, "R")){
+            return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
+        }
     }
 
     return {};

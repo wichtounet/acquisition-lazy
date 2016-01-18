@@ -21,5 +21,5 @@
 
 #include "buyoutmanager.h"
 
-bool is_auto_priced(const std::string& title);
-Buyout get_auto_price(const std::string& title);
+bool is_auto_priced(const std::string& title, bool recipe = false);
+Buyout get_auto_price(const std::string& title, bool recipe = false);
