@@ -18,6 +18,7 @@
 */
 
 #include <sstream>
+#include <iostream>
 
 #include "auto_price.hpp"
 
@@ -69,7 +70,7 @@ int to_int(const std::string& s){
 
 } //end of anonymous namespace
 
-bool is_auto_priced(const std::string& title, bool recipe){
+bool is_auto_priced(const std::string& title, bool recipe, bool talismans){
     if(ends_with(title, "c")){
         return is_double({title.begin(), title.begin() + title.size() - 1});
     } else if(ends_with(title, "f")){
@@ -82,11 +83,26 @@ bool is_auto_priced(const std::string& title, bool recipe){
         return is_double({title.begin(), title.begin() + title.size() - 2});
     }
 
-    // Automatically price chaos/regal recipes
+    // Automatically price recipes
     if(recipe){
+        // Chaos and Regals Recipes
         if(starts_with(title, "C")){
             return is_int({title.begin() + 1, title.end()});
         } else if(starts_with(title, "R")){
+            return is_int({title.begin() + 1, title.end()});
+        }
+
+        // Flask Crafting
+        else if(starts_with(title, "F_C")){
+            return is_int({title.begin() + 3, title.end()});
+        } else if(starts_with(title, "F_R")){
+            return is_int({title.begin() + 3, title.end()});
+        }
+    }
+
+    // Automatically price talismans tabs
+    if(talismans){
+        if(starts_with(title, "T")){
             return is_int({title.begin() + 1, title.end()});
         }
     }
@@ -94,7 +110,7 @@ bool is_auto_priced(const std::string& title, bool recipe){
     return false;
 }
 
-Buyout get_auto_price(const std::string& title, bool recipe){
+Buyout get_auto_price(const std::string& title, bool recipe, bool talismans){
     if(ends_with(title, "c")){
         return {to_double({title.begin(), title.begin() + title.size() - 1}), BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
     } else if(ends_with(title, "f")){
@@ -107,14 +123,31 @@ Buyout get_auto_price(const std::string& title, bool recipe){
         return {to_double({title.begin(), title.begin() + title.size() - 2}), BUYOUT_TYPE_BUYOUT, CURRENCY_EXALTED_ORB, {}};
     }
 
-    // Automatically price chaos/regal recipes
+    // Automatically price recipes
     if(recipe){
+        // Chaos and Regals Recipes
         if(starts_with(title, "C")){
             return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
         } else if(starts_with(title, "R")){
             return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
         }
+
+        // Flask Crafting
+        else if(starts_with(title, "F_C")){
+            return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
+        } else if(starts_with(title, "F_R")){
+            return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
+        }
     }
+
+    // Automatically price talismans tabs
+    if(talismans){
+        if(starts_with(title, "T")){
+            return {1.0, BUYOUT_TYPE_BUYOUT, CURRENCY_CHAOS_ORB, {}};
+        }
+    }
+
+    std::cerr << "get_auto_price should never be called on non-auto priced tabs" << std::endl;
 
     return {};
 }
