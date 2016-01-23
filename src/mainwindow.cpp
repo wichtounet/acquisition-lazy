@@ -124,7 +124,9 @@ void MainWindow::InitializeUi() {
     connect(ui->buyoutValueLineEdit, SIGNAL(textEdited(QString)), this, SLOT(OnBuyoutChange()));
 
     ui->actionAutomatically_refresh_items->setChecked(app_->items_manager().auto_update());
-    ui->actionTabsAutoPrice->setChecked(app_->items_manager().auto_price());
+    ui->actionTabsAutoPrice->setChecked(app_->items_manager().is_auto_price());
+    ui->actionTabsAutoPriceRecipes->setChecked(app_->items_manager().is_auto_price_recipes());
+    ui->actionTabsAutoPriceTalismans->setChecked(app_->items_manager().is_auto_price_talismans());
     ui->actionTabsLimitDownloads->setChecked(app_->items_manager().limit_downloads());
     UpdateShopMenu();
 
@@ -644,6 +646,14 @@ void MainWindow::on_actionTabsAutoPrice_triggered() {
 
 void MainWindow::on_actionTabsLimitDownloads_triggered() {
     app_->items_manager().SetLimitDownloads(ui->actionTabsLimitDownloads->isChecked());
+}
+
+void MainWindow::on_actionTabsAutoPriceRecipes_triggered() {
+    app_->items_manager().SetAutoPriceRecipes(ui->actionTabsAutoPriceRecipes->isChecked());
+}
+
+void MainWindow::on_actionTabsAutoPriceTalismans_triggered() {
+    app_->items_manager().SetAutoPriceTalismans(ui->actionTabsAutoPriceTalismans->isChecked());
 }
 
 void MainWindow::on_actionUpdate_shop_triggered() {

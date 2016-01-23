@@ -41,7 +41,9 @@ ItemsManager::ItemsManager(Application &app) :
 {
     auto_update_interval_ = std::stoi(data_.Get("autoupdate_interval", "30"));
     auto_update_ = data_.GetBool("autoupdate", true);
-    auto_price_ = data_.GetBool("autoprice", false);
+    auto_price = data_.GetBool("autoprice", false);
+    auto_price_recipes = data_.GetBool("autopricerecipes", false);
+    auto_price_talismans = data_.GetBool("autopricetalismans", false);
     limit_downloads_ = data_.GetBool("limitdownloads", false);
     SetAutoUpdateInterval(auto_update_interval_);
     connect(auto_update_timer_.get(), SIGNAL(timeout()), this, SLOT(OnAutoRefreshTimer()));
@@ -128,12 +130,22 @@ void ItemsManager::SetAutoUpdate(bool update) {
 
 void ItemsManager::SetAutoPrice(bool price) {
     data_.SetBool("autoprice", price);
-    auto_price_ = price;
+    auto_price = price;
 }
 
 void ItemsManager::SetLimitDownloads(bool limit) {
     data_.SetBool("limitdownloads", limit);
     limit_downloads_ = limit;
+}
+
+void ItemsManager::SetAutoPriceRecipes(bool price) {
+    data_.SetBool("autopricerecipes", price);
+    auto_price_recipes = price;
+}
+
+void ItemsManager::SetAutoPriceTalismans(bool price) {
+    data_.SetBool("autopricetalismans", price);
+    auto_price_talismans = price;
 }
 
 void ItemsManager::SetAutoUpdateInterval(int minutes) {

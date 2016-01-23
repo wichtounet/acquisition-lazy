@@ -278,6 +278,8 @@
     </property>
     <addaction name="actionTabsAutoPrice"/>
     <addaction name="actionTabsLimitDownloads"/>
+    <addaction name="actionTabsAutoPriceRecipes"/>
+    <addaction name="actionTabsAutoPriceTalismans"/>
    </widget>
    <widget class="QMenu" name="menuAuto_online">
     <property name="title">
@@ -341,6 +343,28 @@
    </property>
    <property name="text">
     <string>Download only priced tabs</string>
+   </property>
+  </action>
+  <action name="actionTabsAutoPriceRecipes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Automatically price recipes tabs</string>
+   </property>
+  </action>
+  <action name="actionTabsAutoPriceTalismans">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Automatically price talismans tabs</string>
    </property>
   </action>
   <action name="actionItems_refresh_interval">

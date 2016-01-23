@@ -48,6 +48,8 @@ public:
     void SetAutoUpdateInterval(int minutes);
     void SetAutoUpdate(bool update);
     void SetAutoPrice(bool price);
+    void SetAutoPriceRecipes(bool price);
+    void SetAutoPriceTalismans(bool price);
     void SetLimitDownloads(bool limit);
     int auto_update_interval() const { return auto_update_interval_; }
     bool auto_update() const { return auto_update_; }
@@ -55,8 +57,22 @@ public:
     const std::vector<std::string> &tabs() const { return tabs_; }
     void PropagateTabBuyouts();
 
-    bool auto_price() const { return auto_price_; }
-    bool limit_downloads() const { return limit_downloads_; }
+    bool is_auto_price() const {
+        return auto_price;
+    }
+
+    bool is_auto_price_recipes() const {
+        return auto_price_recipes;
+    }
+
+    bool is_auto_price_talismans() const {
+        return auto_price_talismans;
+    }
+
+    bool limit_downloads() const {
+        return limit_downloads_;
+    }
+
 public slots:
     // called by auto_update_timer_
     void OnAutoRefreshTimer();
@@ -77,7 +93,13 @@ private:
     int auto_update_interval_;
 
     // should tabs be automatically priced
-    bool auto_price_;
+    bool auto_price;
+
+    // should recipe tabs be automatically priced
+    bool auto_price_recipes;
+
+    // should talismans tabs be automatically priced
+    bool auto_price_talismans;
 
     // should only priced tabs be automatically downloaded
     bool limit_downloads_;

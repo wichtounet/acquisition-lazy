@@ -270,7 +270,7 @@ void ItemsManagerWorker::OnFirstTabReceived() {
                     location.set_tab_id(index);
                     location.set_tab_label(label);
 
-                    if(application.items_manager().auto_price() && is_auto_priced(label, price_recipes)){
+                    if(application.items_manager().is_auto_price() && is_auto_priced(label, price_recipes)){
                         application.buyout_manager().SetTab(location.GetUniqueHash(), get_auto_price(label, price_recipes));
                     }
 
@@ -290,12 +290,12 @@ void ItemsManagerWorker::OnFirstTabReceived() {
         if (!doc["tabs"][0].HasMember("hidden") || !doc["tabs"][0]["hidden"].GetBool())
             ParseItems(&doc["items"], first_tab_location, doc.GetAllocator());
 
-        if(application.items_manager().auto_price() && is_auto_priced(tabs_[0], price_recipes)){
+        if(application.items_manager().is_auto_price() && is_auto_priced(tabs_[0], price_recipes)){
             application.buyout_manager().SetTab(first_tab_location.GetUniqueHash(), get_auto_price(tabs_[0], price_recipes));
         }
     }
 
-    if(application.items_manager().auto_price()){
+    if(application.items_manager().is_auto_price()){
         application.items_manager().PropagateTabBuyouts();
     }
 
