@@ -94,9 +94,9 @@ bool is_auto_priced(const std::string& title, bool recipe, bool talismans){
 
         // Flask Crafting
         else if(starts_with(title, "F_C")){
-            return is_int({title.begin() + 3, title.end()});
+            return title.size() == 3 || is_int({title.begin() + 3, title.end()});
         } else if(starts_with(title, "F_R")){
-            return is_int({title.begin() + 3, title.end()});
+            return title.size() == 3 || is_int({title.begin() + 3, title.end()});
         }
     }
 
