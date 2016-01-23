@@ -59,8 +59,7 @@ enum {
 LoginDialog::LoginDialog(std::unique_ptr<Application> app) :
     app_(std::move(app)),
     ui(new Ui::LoginDialog),
-    mw(0),
-    asked_to_update_(false)
+    mw(0)
 {
     ui->setupUi(this);
     ui->errorLabel->hide();
@@ -80,14 +79,6 @@ LoginDialog::LoginDialog(std::unique_ptr<Application> app) :
     login_manager_ = std::make_unique<QNetworkAccessManager>();
     connect(ui->proxyCheckBox, SIGNAL(clicked(bool)), this, SLOT(OnProxyCheckBoxClicked(bool)));
     connect(ui->loginButton, SIGNAL(clicked()), this, SLOT(OnLoginButtonClicked()));
-
-    lambda_connect(&update_checker_, SIGNAL(UpdateAvailable()), [&](){
-        // Only annoy the user once at the login dialog window, even if it's opened for more than an hour
-        if (asked_to_update_)
-            return;
-        asked_to_update_ = true;
-        UpdateChecker::AskUserToUpdate(this);
-    });
 }
 
 void LoginDialog::OnLoginButtonClicked() {
