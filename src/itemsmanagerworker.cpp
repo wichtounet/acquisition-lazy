@@ -254,6 +254,9 @@ void ItemsManagerWorker::OnFirstTabReceived() {
 
     QLOG_DEBUG() << "Received tabs list, there are" << doc["tabs"].Size() << "tabs";
 
+    auto auto_price = application.items_manager().is_auto_price();
+    auto limit_downloads = application.items_manager().limit_downloads();
+
     //TODO Get that from the configuration
     bool price_recipes = true;
 
@@ -263,14 +266,14 @@ void ItemsManagerWorker::OnFirstTabReceived() {
         tabs_.push_back(label);
 
         if (index > 0) {
-            if(!application.items_manager().limit_downloads() || is_auto_priced(label, price_recipes)){
+            if(!limit_downloads || is_auto_priced(label, price_recipes)){
                 if (!tab.HasMember("hidden") || !tab["hidden"].GetBool()){
                     ItemLocation location;
                     location.set_type(ItemLocationType::STASH);
                     location.set_tab_id(index);
                     location.set_tab_label(label);
 
-                    if(application.items_manager().is_auto_price() && is_auto_priced(label, price_recipes)){
+                    if(auto_price && is_auto_priced(label, price_recipes)){
                         application.buyout_manager().SetTab(location.GetUniqueHash(), get_auto_price(label, price_recipes));
                     }
 
@@ -282,7 +285,7 @@ void ItemsManagerWorker::OnFirstTabReceived() {
         ++index;
     }
 
-    if(!application.items_manager().limit_downloads() || is_auto_priced(tabs_[0], price_recipes)){
+    if(!limit_downloads || is_auto_priced(tabs_[0], price_recipes)){
         ItemLocation first_tab_location;
         first_tab_location.set_type(ItemLocationType::STASH);
         first_tab_location.set_tab_id(0);
@@ -290,12 +293,12 @@ void ItemsManagerWorker::OnFirstTabReceived() {
         if (!doc["tabs"][0].HasMember("hidden") || !doc["tabs"][0]["hidden"].GetBool())
             ParseItems(&doc["items"], first_tab_location, doc.GetAllocator());
 
-        if(application.items_manager().is_auto_price() && is_auto_priced(tabs_[0], price_recipes)){
+        if(auto_price && is_auto_priced(tabs_[0], price_recipes)){
             application.buyout_manager().SetTab(first_tab_location.GetUniqueHash(), get_auto_price(tabs_[0], price_recipes));
         }
     }
 
-    if(application.items_manager().is_auto_price()){
+    if(auto_price){
         application.items_manager().PropagateTabBuyouts();
     }
 
