@@ -182,15 +182,17 @@ void LoginDialog::OnSteamCookieReceived(const QString &cookie) {
 void LoginDialog::LoginWithCookie(const QString &cookie) {
     QNetworkRequest login_req( (QUrl(POE_LOGIN_URL)) ); //Inner parenths to avoid the most vexing parse
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
     QNetworkCookie poeCookie(POE_COOKIE_NAME, cookie.toUtf8());
 
     poeCookie.setPath("/");
     poeCookie.setDomain(".pathofexile.com");
 
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
     login_manager_->cookieJar()->insertCookie(poeCookie);
 #else
-    login_req.setRawHeader((std::string("Cookie: ") + POE_COOKIE_NAME).c_str() , cookie.toUtf8());
+    QList<QNetworkCookie> cookies;
+    cookies.append(poeCookie);
+    login_req.setHeader(QNetworkRequest::CookieHeader, QVariant::fromValue(cookies));
 #endif
 
     QNetworkReply *login_page = login_manager_->get(login_req);
