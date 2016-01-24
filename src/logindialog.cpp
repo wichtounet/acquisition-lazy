@@ -110,6 +110,7 @@ void LoginDialog::OnLoginPageFinished() {
         DisplayError("Network error: " + reply->errorString());
         return;
     }
+
     switch (ui->loginTabs->currentIndex()) {
         case LOGIN_PASSWORD: {
             QByteArray bytes = reply->readAll();
@@ -192,7 +193,7 @@ void LoginDialog::LoginWithCookie(const QString &cookie) {
 #else
     QList<QNetworkCookie> cookies;
     cookies.append(poeCookie);
-    login_req.setHeader(QNetworkRequest::CookieHeader, QVariant::fromValue(cookies));
+    login_manager_->cookieJar()->setCookiesFromUrl(cookies, QUrl(POE_LOGIN_URL));
 #endif
 
     QNetworkReply *login_page = login_manager_->get(login_req);
