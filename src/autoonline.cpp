@@ -39,6 +39,7 @@ AutoOnline::AutoOnline(DataStore &data, DataStore &sensitive_data) :
     sensitive_data_(sensitive_data),
     enabled_(data_.GetBool("online_enabled")),
     url_(sensitive_data_.Get("online_url")),
+    process_script_(sensitive_data_.Get("process_script")),
     previous_status_(true)  // set to true to force first refresh
 {
     timer_.setInterval(kOnlineCheckInterval);
@@ -133,6 +134,11 @@ void AutoOnline::SetUrl(const std::string &url) {
     while (url_.size() > 0 && url_[url_.size() - 1] == '/')
         url_.erase(url_.size() - 1);
     sensitive_data_.Set("online_url", url_);
+}
+
+void AutoOnline::SetRemoteScript(const std::string& path) {
+    process_script_ = path;
+    sensitive_data_.Set("process_script", path);
 }
 
 void AutoOnline::SetEnabled(bool enabled) {

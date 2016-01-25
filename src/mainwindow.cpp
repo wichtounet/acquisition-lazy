@@ -601,10 +601,16 @@ void MainWindow::UpdateShopMenu() {
 void MainWindow::UpdateOnlineGui() {
     online_label_.setVisible(auto_online_.enabled());
     ui->actionAutomatically_refresh_online_status->setChecked(auto_online_.enabled());
+
     std::string action_label = "control.poe.xyz.is URL...";
     if (auto_online_.IsUrlSet())
         action_label += " [******]";
     ui->actionControl_poe_xyz_is_URL->setText(action_label.c_str());
+
+    action_label = "Remote process list script";
+    if (auto_online_.IsRemoteScriptSet())
+        action_label += " [******]";
+    ui->actionRemoteScript->setText(action_label.c_str());
 }
 
 void MainWindow::OnUpdateAvailable() {
@@ -687,6 +693,16 @@ void MainWindow::on_actionControl_poe_xyz_is_URL_triggered() {
         QLineEdit::Normal, "", &ok);
     if (ok && !url.isEmpty())
         auto_online_.SetUrl(url.toStdString());
+    UpdateOnlineGui();
+}
+
+void MainWindow::on_actionRemoteScript_triggered() {
+    bool ok;
+    QString path = QInputDialog::getText(this, "Remote Process List Script",
+        "Enter the path to the script for listing the processes of your remote gaming machine",
+        QLineEdit::Normal, "", &ok);
+    if (ok && !path.isEmpty())
+        auto_online_.SetRemoteScript(path.toStdString());
     UpdateOnlineGui();
 }
 
