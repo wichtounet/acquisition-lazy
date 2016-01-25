@@ -78,6 +78,22 @@ bool is_poe_running_locally() {
 #endif
 }
 
+bool is_poe_running_remotely(const std::string& script) {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+    std::string poe_check_script = "/bin/sh -c \"" + script + "|grep PathOfExile|grep -v grep|wc -l\"";
+
+    QProcess process;
+    process.start(poe_check_script.c_str());
+    process.waitForFinished(-1);
+
+    QString i = process.readAllStandardOutput();
+    return i.toInt() > 0;
+#elif defined(Q_OS_WIN)
+    QLOG_ERROR() << "Script handling has not bee implemented on Windows";
+    return false;
+#endif
+}
+
 } //end of anonymous namespace
 
 AutoOnline::AutoOnline(DataStore &data, DataStore &sensitive_data) :
@@ -113,15 +129,23 @@ void AutoOnline::SendOnlineUpdate(bool online) {
     request.setRawHeader("User-Agent" , (std::string("Acquisition ") + VERSION_NAME).c_str());
 #endif
 
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
     nm_.post(request, data);
 }
 
 void AutoOnline::Check() {
     bool running = is_poe_running_locally();
+    if(IsRemoteScriptSet()){
+        running = is_poe_running_remotely(process_script_);
+    } else {
+        running = is_poe_running_locally();
+    }
 
     if (running || previous_status_) {
         SendOnlineUpdate(running);
     }
+
     previous_status_ = running;
 
     emit Update(running);
