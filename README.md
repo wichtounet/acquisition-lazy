@@ -15,6 +15,11 @@ Acquisition is an inventory management tool for [Path of Exile](https://www.path
 
 It is written in C++, uses Qt widget toolkit and runs on Windows and Linux.
 
+New features:
+ * Automatically set buyouts for tabs
+ * Only downloads tabs that are priced
+ * Check if poe is running on another machine
+
 Differences with the original project:
  * Support QT4
  * Support g++ compiler
