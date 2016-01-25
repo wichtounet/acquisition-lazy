@@ -34,23 +34,9 @@
 // check for PoE running every minute
 const int kOnlineCheckInterval = 60 * 1000;
 
-AutoOnline::AutoOnline(DataStore &data, DataStore &sensitive_data) :
-    data_(data),
-    sensitive_data_(sensitive_data),
-    enabled_(data_.GetBool("online_enabled")),
-    url_(sensitive_data_.Get("online_url")),
-    process_script_(sensitive_data_.Get("process_script")),
-    previous_status_(true)  // set to true to force first refresh
-{
-    timer_.setInterval(kOnlineCheckInterval);
-    connect(&timer_, SIGNAL(timeout()), this, SLOT(Check()));
-    if (enabled_) {
-        timer_.start();
-        Check();
-    }
-}
+namespace {
 
-static bool IsPoeRunning() {
+bool is_poe_running_locally() {
 #if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     QProcess process;
     process.start("/bin/sh -c \"ps -ax|grep PathOfExile.exe|grep -v grep|wc -l\"");
@@ -92,6 +78,24 @@ static bool IsPoeRunning() {
 #endif
 }
 
+} //end of anonymous namespace
+
+AutoOnline::AutoOnline(DataStore &data, DataStore &sensitive_data) :
+    data_(data),
+    sensitive_data_(sensitive_data),
+    enabled_(data_.GetBool("online_enabled")),
+    url_(sensitive_data_.Get("online_url")),
+    process_script_(sensitive_data_.Get("process_script")),
+    previous_status_(true)  // set to true to force first refresh
+{
+    timer_.setInterval(kOnlineCheckInterval);
+    connect(&timer_, SIGNAL(timeout()), this, SLOT(Check()));
+    if (enabled_) {
+        timer_.start();
+        Check();
+    }
+}
+
 void AutoOnline::SendOnlineUpdate(bool online) {
     // online: true  -> Go online
     // online: false -> Go offline
@@ -113,7 +117,7 @@ void AutoOnline::SendOnlineUpdate(bool online) {
 }
 
 void AutoOnline::Check() {
-    bool running = IsPoeRunning();
+    bool running = is_poe_running_locally();
 
     if (running || previous_status_) {
         SendOnlineUpdate(running);
