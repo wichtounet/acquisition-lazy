@@ -128,6 +128,7 @@ void MainWindow::InitializeUi() {
     ui->actionTabsAutoPriceRecipes->setChecked(app_->items_manager().is_auto_price_recipes());
     ui->actionTabsAutoPriceTalismans->setChecked(app_->items_manager().is_auto_price_talismans());
     ui->actionTabsLimitDownloads->setChecked(app_->items_manager().limit_downloads());
+    ui->actionTabsDownloadCharacters->setChecked(app_->items_manager().download_characters());
     UpdateShopMenu();
 
     search_form_layout_ = new QVBoxLayout;
@@ -653,6 +654,10 @@ void MainWindow::on_actionTabsAutoPrice_triggered() {
 
 void MainWindow::on_actionTabsLimitDownloads_triggered() {
     app_->items_manager().SetLimitDownloads(ui->actionTabsLimitDownloads->isChecked());
+}
+
+void MainWindow::on_actionTabsDownloadCharacters_triggered() {
+    app_->items_manager().SetDownloadCharacters(ui->actionTabsDownloadCharacters->isChecked());
 }
 
 void MainWindow::on_actionTabsAutoPriceRecipes_triggered() {

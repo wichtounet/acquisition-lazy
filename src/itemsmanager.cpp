@@ -45,6 +45,7 @@ ItemsManager::ItemsManager(Application &app) :
     auto_price_recipes = data_.GetBool("autopricerecipes", false);
     auto_price_talismans = data_.GetBool("autopricetalismans", false);
     limit_downloads_ = data_.GetBool("limitdownloads", false);
+    download_characters_ = data_.GetBool("downloadcharacters", false);
     SetAutoUpdateInterval(auto_update_interval_);
     connect(auto_update_timer_.get(), SIGNAL(timeout()), this, SLOT(OnAutoRefreshTimer()));
 }
@@ -136,6 +137,11 @@ void ItemsManager::SetAutoPrice(bool price) {
 void ItemsManager::SetLimitDownloads(bool limit) {
     data_.SetBool("limitdownloads", limit);
     limit_downloads_ = limit;
+}
+
+void ItemsManager::SetDownloadCharacters(bool download) {
+    data_.SetBool("downloadcharacters", download);
+    download_characters_ = download;
 }
 
 void ItemsManager::SetAutoPriceRecipes(bool price) {

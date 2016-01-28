@@ -106,6 +106,7 @@ private slots:
     void on_actionTabsAutoPriceRecipes_triggered();
     void on_actionTabsAutoPriceTalismans_triggered();
     void on_actionTabsLimitDownloads_triggered();
+    void on_actionTabsDownloadCharacters_triggered();
     void on_actionUpdate_shop_triggered();
     void on_actionShop_template_triggered();
     void on_actionAutomatically_update_shop_triggered();

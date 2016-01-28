@@ -51,6 +51,7 @@ public:
     void SetAutoPriceRecipes(bool price);
     void SetAutoPriceTalismans(bool price);
     void SetLimitDownloads(bool limit);
+    void SetDownloadCharacters(bool download);
     int auto_update_interval() const { return auto_update_interval_; }
     bool auto_update() const { return auto_update_; }
     const Items &items() const { return items_; }
@@ -71,6 +72,10 @@ public:
 
     bool limit_downloads() const {
         return limit_downloads_;
+    }
+
+    bool download_characters() const {
+        return download_characters_;
     }
 
 public slots:
@@ -103,6 +108,9 @@ private:
 
     // should only priced tabs be automatically downloaded
     bool limit_downloads_;
+
+    // should characters be automatically downloaded
+    bool download_characters_;
 
     std::unique_ptr<QTimer> auto_update_timer_;
     std::unique_ptr<ItemsManagerWorker> worker_;
