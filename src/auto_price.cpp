@@ -77,6 +77,8 @@ bool is_auto_priced(const std::string& title, bool recipe, bool talismans){
         return is_double({title.begin(), title.begin() + title.size() - 1});
     } else if(ends_with(title, "alt")){
         return is_double({title.begin(), title.begin() + title.size() - 3});
+    } else if(ends_with(title, "chi")){
+        return is_double({title.begin(), title.begin() + title.size() - 3});
     } else if(ends_with(title, "alc")){
         return is_double({title.begin(), title.begin() + title.size() - 3});
     } else if(ends_with(title, "ex")){
@@ -117,6 +119,8 @@ Buyout get_auto_price(const std::string& title, bool recipe, bool talismans){
         return {to_double({title.begin(), title.begin() + title.size() - 1}), BUYOUT_TYPE_BUYOUT, CURRENCY_ORB_OF_FUSING, {}};
     } else if(ends_with(title, "alt")){
         return {to_double({title.begin(), title.begin() + title.size() - 3}), BUYOUT_TYPE_BUYOUT, CURRENCY_ORB_OF_ALTERATION, {}};
+    } else if(ends_with(title, "chi")){
+        return {to_double({title.begin(), title.begin() + title.size() - 3}), BUYOUT_TYPE_BUYOUT, CURRENCY_CARTOGRAPHERS_CHISEL, {}};
     } else if(ends_with(title, "alc")){
         return {to_double({title.begin(), title.begin() + title.size() - 3}), BUYOUT_TYPE_BUYOUT, CURRENCY_ORB_OF_ALCHEMY, {}};
     } else if(ends_with(title, "ex")){
